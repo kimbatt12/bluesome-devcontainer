@@ -1,0 +1,18 @@
+services:
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bluesome_container
+    restart: unless-stopped
+    user: "bluesome-agent"
+    stdin_open: true
+    tty: true
+    ports:
+      - "6080:6080"  # Exposed strictly for host-side web VNC monitoring
+    shm_size: '2gb'
+    volumes:
+      - bluesome_home:/home/bluesome-agent
+
+volumes:
+  bluesome_home:
