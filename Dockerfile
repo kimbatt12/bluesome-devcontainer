@@ -4,10 +4,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     git \
     ca-certificates \
-    gnupg \
     xz-utils \
     tini \
     chromium \
+    ripgrep \
     fonts-liberation \
     fonts-noto-cjk \
     fonts-noto-color-emoji \
