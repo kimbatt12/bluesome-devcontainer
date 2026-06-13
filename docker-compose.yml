@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     shm_size: "2gb"
     volumes:
-      - bluesome_home:/home/ubuntu
+      - hermes_home:/home/hermes
 
 volumes:
-  bluesome_home:
+  hermes_home:

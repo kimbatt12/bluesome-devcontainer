@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM debian:bookworm-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
@@ -7,20 +7,23 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gnupg \
     xz-utils \
     tini \
+    chromium \
     fonts-liberation \
     fonts-noto-cjk \
     fonts-noto-color-emoji \
-    && curl -fsSL https://dl.google.com/linux/linux_signing_key.pub \
-        | gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg \
-    && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" \
-        > /etc/apt/sources.list.d/google-chrome.list \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends google-chrome-stable \
+    && useradd --create-home --shell /bin/bash hermes \
+    && ln -s /usr/bin/chromium /usr/local/bin/google-chrome \
+    && ln -s /usr/bin/chromium /usr/local/bin/chrome \
     && command -v tini \
+    && command -v chromium \
     && rm -rf /var/lib/apt/lists/*
 
-USER ubuntu
-WORKDIR /home/ubuntu
+ENV CHROME_PATH=/usr/bin/chromium \
+    CHROMIUM_PATH=/usr/bin/chromium \
+    BROWSER_PATH=/usr/bin/chromium
+
+USER hermes
+WORKDIR /home/hermes
 
 RUN curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
 
