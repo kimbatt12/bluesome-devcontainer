@@ -20,12 +20,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 ENV CHROME_PATH=/usr/bin/chromium \
     CHROMIUM_PATH=/usr/bin/chromium \
-    BROWSER_PATH=/usr/bin/chromium
+    BROWSER_PATH=/usr/bin/chromium \
+    PATH="/home/hermes/.local/bin:${PATH}"
 
 USER hermes
 WORKDIR /home/hermes
 
 RUN curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
 
+USER root
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+USER hermes
 ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["sleep", "infinity"]
+CMD ["/usr/local/bin/entrypoint.sh"]
