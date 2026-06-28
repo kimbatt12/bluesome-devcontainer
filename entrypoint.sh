@@ -8,10 +8,10 @@ backoff_seconds=10
 
 stop_gateway() {
   if [ -n "$child_pid" ]; then
-    kill "$child_pid" 2>/dev/null || true
+    kill -TERM "$child_pid" 2>/dev/null || true
     wait "$child_pid" 2>/dev/null || true
   fi
-  exit 0
+  exit 143
 }
 
 trap stop_gateway INT TERM
