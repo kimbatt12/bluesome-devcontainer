@@ -1,1 +1,2 @@
 volumes/*
+egress-proxy/allowed-domains.conf

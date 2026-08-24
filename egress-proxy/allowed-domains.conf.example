@@ -1,0 +1,14 @@
+# One domain per line. Matches that domain and any subdomain
+# (e.g. "openai.com" also allows "api.openai.com").
+openai.com            # OpenAI / GPT API
+chatgpt.com           # ChatGPT backend (separate apex from openai.com)
+openrouter.ai         # hermes model routing/fallback
+models.dev            # hermes model metadata (context window/pricing lookups)
+anthropic.com         # Anthropic / Claude API
+claude.com            # Anthropic / Claude API
+claude.ai            # Anthropic / Claude API
+github.com            # git clone / GitHub API
+slack.com             # Slack API
+discord.com           # Discord API
+discordapp.com        # Discord CDN (attachments/avatars, separate apex from discord.com)
+discord.gg             # Discord gateway websocket (gateway.discord.gg), separate apex from discord.com
