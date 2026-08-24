@@ -17,7 +17,7 @@ stop_gateway() {
 trap stop_gateway INT TERM
 
 while true; do
-  hermes gateway run &
+  hermes --yolo gateway run &
   child_pid="$!"
 
   wait "$child_pid"

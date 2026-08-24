@@ -8,6 +8,36 @@ services:
     shm_size: "2gb"
     volumes:
       - hermes_home:/home/hermes
+    environment:
+      HTTP_PROXY: "http://egress-proxy:8080"
+      HTTPS_PROXY: "http://egress-proxy:8080"
+      http_proxy: "http://egress-proxy:8080"
+      https_proxy: "http://egress-proxy:8080"
+      NO_PROXY: "localhost,127.0.0.1"
+      no_proxy: "localhost,127.0.0.1"
+    networks:
+      - internal
+    depends_on:
+      - egress-proxy
+
+  egress-proxy:
+    build:
+      context: ./egress-proxy
+    container_name: bluesome_egress_proxy
+    restart: unless-stopped
+    # long-lived proxy_connect tunnels (Slack Socket Mode, Discord gateway,
+    # ...) never end on their own, so don't wait long before SIGTERM closes
+    # them (see Dockerfile STOPSIGNAL).
+    stop_grace_period: 5s
+    networks:
+      - internal
+      - external
 
 volumes:
   hermes_home:
+
+networks:
+  # agent has no route to the internet except through egress-proxy.
+  internal:
+    internal: true
+  external:
